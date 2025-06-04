@@ -3,6 +3,8 @@
 .global Add
 .global Mul
 .global Set_LED
+.global PinModeASMset
+.global PinModeASMclear
 
 
 ;add function 
@@ -44,4 +46,38 @@ Set_LEDOff:
 
 Set_LEDEnd:
   pop r17
+  ret
+
+
+PinModeASMset:
+  push r1
+  push r0
+
+
+  adiw r24,0x20
+  clr XH
+  mov XL,r24
+
+WriteOne: 
+  ld r20,X
+  or r20,r22
+  st X,r20  
+  pop r0
+  pop r1
+  ret
+
+PinModeASMclear:
+  push r0
+  push r1
+  adiw r24,0x20
+  clr XH
+  mov XL,r24
+
+  writeZero:
+  ld r20,X
+  com r22
+  and r20,r22
+  st X,r20
+  pop r1
+  pop r0
   ret
